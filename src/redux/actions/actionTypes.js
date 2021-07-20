@@ -1,0 +1,10 @@
+const Actions = {
+  ALERT_SUCCESS: "ALERT_SUCCESS",
+  ALERT_ERROR: "ALERT_ERROR",
+  ALERT_CLEAR: "ALERT_CLEAR",
+  ALERT_INFO: "ALERT_INFO",
+  ALERT_WARNING: "ALERT_WARNING",
+  SIGNUP_LOADING: "signup_loading",
+};
+
+export default Actions;
