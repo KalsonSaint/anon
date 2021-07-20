@@ -56,7 +56,7 @@ function SubmitThreat() {
       description,
       media: file,
     };
-    console.log(payload);
+    // console.log(payload);
     triggerLoadingAlert(
       true,
       "Validating Credentials",
