@@ -32,8 +32,26 @@ export const getNonVerifiedPostsApi = async () => {
 
 export const addPostApi = async (payload) => {
   try {
+    let formData = new FormData();
+    const { post, description, media } = payload;
+
+    if (media.length > 1) {
+      media.forEach((file, i) => {
+        formData.append("media", file);
+      });
+    } else {
+      formData.append("media", media);
+    }
+
+    formData.append("post", post);
+    formData.append("description", description);
+
     const url = "/post";
-    const response = await axios.post(url, payload);
+    const response = await axios.post(url, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return response.data;
   } catch (err) {
     throw err;

@@ -1,32 +1,27 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
-import { triggerError, triggerLoadingAlert } from "../../components/Alert";
+import {
+  triggerError,
+  triggerLoadingAlert,
+  triggerSuccess,
+} from "../../components/Alert";
 import { addPostApi } from "../../redux/actions/ThreatActions";
-import { scrollToTop } from "../../util/scrollToTop";
 
 function SubmitThreat() {
   const [formData, setFormData] = useState({
     post: "",
     description: "",
-    media: {},
   });
   const [error, setError] = useState("");
-  const [selectedFiles, setSelectedFiles] = useState({});
-  const [images, setImages] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const handleFileChange = (name, e) => {
-    if (e.target.files.length > 1) {
-      setSelectedFiles({
-        ...selectedFiles,
-        file: e.target.files,
-      });
-    } else {
-      setSelectedFiles({
-        ...selectedFiles,
-        file: e.target.files[0],
-      });
-    }
+    const files = Array.from(e.target.files);
+    setSelectedFiles((prev) => [...prev, files]);
+
+    // Logic for base64 endcoded image
+
     // if (e.target.files && e.target.files[0]) {
     //   var reader = new FileReader();
     //   reader.onload = (e) => {
@@ -50,22 +45,22 @@ function SubmitThreat() {
     e.preventDefault();
 
     const { post, description } = formData;
-    const { file } = selectedFiles;
     const payload = {
       post,
       description,
-      media: file,
+      media: selectedFiles[0],
     };
-    // console.log(payload);
-    triggerLoadingAlert(
-      true,
-      "Validating Credentials",
-      "Hold on while your account is authorized"
-    );
+
     try {
-      const responseData = await addPostApi(payload);
-      console.log(responseData);
+      triggerLoadingAlert(
+        true,
+        "Validating Credentials",
+        "Hold on while your account is authorized"
+      );
+      await addPostApi(payload);
       triggerLoadingAlert(false);
+      triggerSuccess("Threat submitted successfully");
+      window.location.reload();
     } catch (error) {
       triggerLoadingAlert(false);
       triggerError(error);
@@ -99,7 +94,7 @@ function SubmitThreat() {
                   <li>
                     <Link to="/signin">Login</Link>
                   </li>
-                  <li class="nav-divider" aria-hidden="true">
+                  <li className="nav-divider" aria-hidden="true">
                     <Link to="javascript:void(0)">|</Link>
                   </li>
                   <li>
@@ -122,7 +117,6 @@ function SubmitThreat() {
                   nihil impedit quo minus id quod maxime placeat facere
                   possimus. Nam libero tempore
                 </p>
-                {/* contact-comments m-top-50 js-Mailer */}
                 <form
                   className="js-mailer contact-comments"
                   onSubmit={handleSubmit}
@@ -162,7 +156,7 @@ function SubmitThreat() {
                       <label>Threat Evidence(s)</label>
                       <input
                         type="file"
-                        class="form-control-file"
+                        className="form-control-file"
                         name="file"
                         onChange={(e) => handleFileChange("media", e)}
                         multiple
