@@ -13,7 +13,7 @@ export const getAllUsersApi = async () => {
 export const getAllPostApi = async () => {
   try {
     const url = "/posts";
-    const response = await axios.get();
+    const response = await axios.get(url);
     return response.data;
   } catch (err) {
     throw err;
@@ -23,7 +23,7 @@ export const getAllPostApi = async () => {
 export const getNonVerifiedPostsApi = async () => {
   try {
     const url = "/posts-nonverified";
-    const response = await axios.get();
+    const response = await axios.get(url);
     return response.data;
   } catch (err) {
     throw err;
