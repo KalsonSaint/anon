@@ -3,6 +3,7 @@ import SubmitThreat from "../pages/dashboard/SubmitThreat";
 import UnVerifiedThreats from "../pages/dashboard/UnVerifiedThreats";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import Logout from "../pages/Logout";
 import Threats from "../pages/Threats";
 
 const Routes = [
@@ -15,7 +16,7 @@ const Routes = [
   {
     path: "/threats",
     exact: true,
-    auth: false,
+    auth: true,
     component: Threats,
   },
   {
@@ -33,21 +34,21 @@ const Routes = [
   {
     path: "/dashboard",
     exact: true,
-    auth: false,
+    auth: true,
     component: Dashboard,
   },
   {
     path: "/unverified-threats",
     exact: true,
-    auth: false,
+    auth: true,
     component: UnVerifiedThreats,
   },
-  // {
-  //   path: "/logout",
-  //   exact: true,
-  //   auth: false,
-  //   component: Signout,
-  // },
+  {
+    path: "/logout",
+    exact: true,
+    auth: false,
+    component: Logout,
+  },
 ];
 
 export default Routes;

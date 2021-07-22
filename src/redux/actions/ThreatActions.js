@@ -30,6 +30,16 @@ export const getNonVerifiedPostsApi = async () => {
   }
 };
 
+export const verifyPostApi = async (id) => {
+  try {
+    const url = `/post/${id}`;
+    const response = await axios.patch(url);
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const addPostApi = async (payload) => {
   try {
     let formData = new FormData();

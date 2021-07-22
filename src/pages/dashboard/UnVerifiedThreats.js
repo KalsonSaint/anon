@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
-import { triggerError } from "../../components/Alert";
-import { getNonVerifiedPostsApi } from "../../redux/actions/ThreatActions";
+import {
+  triggerError,
+  triggerLoadingAlert,
+  triggerSuccess,
+} from "../../components/Alert";
+import {
+  getNonVerifiedPostsApi,
+  verifyPostApi,
+} from "../../redux/actions/ThreatActions";
 
 const formatDate = (date) => {
   let ts = new Date(date);
@@ -19,8 +26,22 @@ function UnVerifiedThreats() {
   const getUnverifiedThreats = async () => {
     try {
       const responseData = await getNonVerifiedPostsApi();
-      console.log(responseData.data);
       setUnverifiedThreats(responseData.data);
+    } catch (error) {
+      triggerError(error);
+    }
+  };
+
+  const verifyThreat = async (id) => {
+    triggerLoadingAlert(
+      true,
+      "Approving",
+      "Please wait! threat is being approved."
+    );
+    try {
+      const responseData = await verifyPostApi(id);
+      triggerLoadingAlert(false);
+      triggerSuccess(responseData.message);
     } catch (error) {
       triggerError(error);
     }
@@ -31,14 +52,14 @@ function UnVerifiedThreats() {
       <header className="l-header">
         <div id="sticky-wrapper" className="l-navbar-wrapper">
           <div className="l-navbar l-navbar_expand l-navbar_t-light js-navbar-sticky">
-            <div class="container-fluid">
+            <div className="container-fluid">
               <nav
-                class="menuzord js-primary-navigation menuzord-responsive "
+                className="menuzord js-primary-navigation menuzord-responsive "
                 role="navigation"
                 aria-label="Primary Navigation"
               >
                 <Link to="/" className="logo-brand">
-                  <img class="retina" src={Logo} alt="Massive" />
+                  <img className="retina" src={Logo} alt="Massive" />
                 </Link>
                 <ul
                   className="menuzord-menu menuzord-right c-nav_s-bg menuzord-indented scrollable"
@@ -63,11 +84,11 @@ function UnVerifiedThreats() {
                       </li>
                     </ul>
                   </li>
-                  <li class="nav-divider" aria-hidden="true">
+                  <li className="nav-divider" aria-hidden="true">
                     <Link to="!">|</Link>
                   </li>
                   <li>
-                    <Link to="/" className="text-danger">
+                    <Link to="/logout" className="text-danger">
                       Logout
                     </Link>
                   </li>
@@ -100,42 +121,43 @@ function UnVerifiedThreats() {
                       <th>Date Created</th>
                     </tr>
                   </thead>
-                  {unverifiedThreats.length > 0 &&
-                    unverifiedThreats.map((threat, i) => (
-                      <tbody>
-                        <th>{threat.post}</th>
-                        <th>{threat.description}</th>
-                        {threat.media && (
+                  <tbody>
+                    {unverifiedThreats.length > 0 &&
+                      unverifiedThreats.map((threat, i) => (
+                        <tr key={i}>
+                          <th>{threat.post}</th>
+                          <th>{threat.description}</th>
+                          {threat.media && (
+                            <th>
+                              {threat.media.length === 0 || threat.media ? (
+                                <p className="text-center">Nil</p>
+                              ) : (
+                                threat.media.map((item, i) => (
+                                  <a href={item} key={i} target="_blank">
+                                    Media {i}
+                                    <br />
+                                  </a>
+                                ))
+                              )}
+                            </th>
+                          )}
+                          <th>{formatDate(threat.createdAt)}</th>
                           <th>
-                            {threat.media.length === 0 || threat.media === ""
-                              ? "Nil"
-                              : threat.media.map(
-                                  (item, i) =>
-                                    (
-                                      <a href={item} key={i} target="_blank">
-                                        Media {i}
-                                        <br />
-                                      </a>
-                                    ) || "Nil"
-                                )}
+                            <button
+                              className="btn btn-small btn-dark-solid  btn-transparent"
+                              onClick={() => verifyThreat(threat.id)}
+                            >
+                              <i className="fa fa-check" /> Approve
+                            </button>
                           </th>
-                        )}
-                        <th>{formatDate(threat.createdAt)}</th>
-                        <th>
-                          <a
-                            href="#"
-                            className="btn btn-small btn-dark-solid  btn-transparent"
-                          >
-                            <i className="fa fa-check" /> Approve
-                          </a>
-                        </th>
-                        <th>
-                          <a href="#" className="btn btn-small btn-dark-border">
-                            <i className="fa fa-trash-o" /> Disapprove
-                          </a>
-                        </th>
-                      </tbody>
-                    ))}
+                          <th>
+                            <button className="btn btn-small btn-dark-border">
+                              <i className="fa fa-trash-o" /> Disapprove
+                            </button>
+                          </th>
+                        </tr>
+                      ))}
+                  </tbody>
                 </table>
               </div>
             </div>

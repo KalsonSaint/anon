@@ -19,7 +19,6 @@ function Dashboard() {
   const getAllThreats = async () => {
     try {
       const responseData = await getAllPostApi();
-      console.log(responseData.data);
       setThreatList(responseData.data);
     } catch (error) {
       triggerError(error);
@@ -31,14 +30,14 @@ function Dashboard() {
       <header className="l-header">
         <div id="sticky-wrapper" className="l-navbar-wrapper">
           <div className="l-navbar l-navbar_expand l-navbar_t-light js-navbar-sticky">
-            <div class="container-fluid">
+            <div className="container-fluid">
               <nav
-                class="menuzord js-primary-navigation menuzord-responsive "
+                className="menuzord js-primary-navigation menuzord-responsive "
                 role="navigation"
                 aria-label="Primary Navigation"
               >
                 <Link to="/" className="logo-brand">
-                  <img class="retina" src={Logo} alt="Massive" />
+                  <img className="retina" src={Logo} alt="Massive" />
                 </Link>
                 <ul
                   className="menuzord-menu menuzord-right c-nav_s-bg menuzord-indented scrollable"
@@ -57,15 +56,17 @@ function Dashboard() {
                         <Link to="">View All Comments</Link>
                       </li>
                       <li>
-                        <Link to="/unverified-threats">View Unverified Threats</Link>
+                        <Link to="/unverified-threats">
+                          View Unverified Threats
+                        </Link>
                       </li>
                     </ul>
                   </li>
-                  <li class="nav-divider" aria-hidden="true">
+                  <li className="nav-divider" aria-hidden="true">
                     <Link to="!">|</Link>
                   </li>
                   <li>
-                    <Link to="/" className="text-danger">
+                    <Link to="/logout" className="text-danger">
                       Logout
                     </Link>
                   </li>
@@ -91,18 +92,18 @@ function Dashboard() {
                       <div className="col-md-4">
                         <div className="post-single">
                           <div className="post-img">
-                            <a href="#">
+                            <div>
                               <img src={threat.media[0]} alt />
-                            </a>
+                            </div>
                           </div>
                           <div className="post-desk">
                             <h4 className="text-uppercase">
                               <a href="blog-single.html">{threat.post}</a>
                             </h4>
                             <div className="date">
-                              <a href="#" className="author">
+                              <p href="#" className="author">
                                 DATE CREATED
-                              </a>
+                              </p>
                               {formatDate(threat.createdAt)}
                             </div>
                             <p>{threat.description}</p>
@@ -118,24 +119,6 @@ function Dashboard() {
                                 </p>
                               </>
                             )}
-                            <div className="row">
-                              <div className="col-md-6">
-                                <a
-                                  href="#"
-                                  className="btn btn-small btn-dark-solid  btn-transparent"
-                                >
-                                  <i className="fa fa-check" /> Approve
-                                </a>
-                              </div>
-                              <div className="col-md-6">
-                                <a
-                                  href="#"
-                                  className="btn btn-small btn-dark-border"
-                                >
-                                  <i className="fa fa-trash-o" /> Disapprove
-                                </a>
-                              </div>
-                            </div>
                           </div>
                         </div>
                       </div>

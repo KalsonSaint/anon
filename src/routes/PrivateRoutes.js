@@ -6,12 +6,12 @@ const PrivateRoutes = ({ component: Component, isgeneral, ...rest }) => (
   <Route
     {...rest}
     render={(props) => {
-      const currentUser = store.get("accessToken");
+      const currentUser = store.get("token");
       if (typeof currentUser === "undefined" || currentUser === null) {
         return (
           <Redirect
             to={{
-              pathname: "/",
+              pathname: "/signin",
               state: { from: props.location },
             }}
           />

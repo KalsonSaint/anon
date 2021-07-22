@@ -47,7 +47,7 @@ function Home() {
                   <li>
                     <Link to="/signin">Login</Link>
                   </li>
-                  <li class="nav-divider" aria-hidden="true">
+                  <li className="nav-divider" aria-hidden="true">
                     <Link to="javascript:void(0)">|</Link>
                   </li>
                   <li>
@@ -73,7 +73,7 @@ function Home() {
           </div>
         </div>
       </div>
-      <section classname="body-content">
+      <section className="body-content">
         <div className="container">
           <div className="row ">
             <div className="portfolio portfolio-with-title portfolio-masonry blog-m col-3 gutter ">

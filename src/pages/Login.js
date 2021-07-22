@@ -63,14 +63,13 @@ function Login() {
         password,
       };
       const responseData = await signInApi(payload);
-      console.log(responseData);
+      store.set("token", responseData.data);
       triggerLoadingAlert(false);
       triggerSuccess(responseData.message);
-      store.set("token", responseData.data);
-      history.replaceState("/dashboard");
-    } catch (err) {
+      history.replace("/dashboard");
+    } catch (error) {
       triggerLoadingAlert(false);
-      triggerError(err);
+      triggerError(error);
     }
   };
 

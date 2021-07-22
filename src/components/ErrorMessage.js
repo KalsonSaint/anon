@@ -1,7 +1,5 @@
 export const getErrorMessage = (errObj) => {
-  // const errResponse = errObj.response || null;
   const errResponse = errObj.response || null;
-    console.log(errResponse)
   const errorMessage =
     errResponse === null
       ? "Something went Wrong Please try again."
