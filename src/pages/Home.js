@@ -1,25 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/img/logo.png";
 import { scrollToTop } from "../util/scrollToTop";
+import { getAllPostApi } from "../redux/actions/ThreatActions";
+import { triggerError } from "../components/Alert";
 
-import Mas1 from "../assets/img/portfolio/masonry/1.jpg";
-import Mas2 from "../assets/img/portfolio/masonry/2.jpg";
-import Mas41 from "../assets/img/portfolio/masonry/4-1.jpg";
-import Mas3 from "../assets/img/portfolio/masonry/3.jpg";
-import Mas5 from "../assets/img/portfolio/masonry/5.jpg";
-import Mas7 from "../assets/img/portfolio/masonry/7.jpg";
-import Mas61 from "../assets/img/portfolio/masonry/6-1.jpg";
-import Mas8 from "../assets/img/portfolio/masonry/8.jpg";
-import Mas9 from "../assets/img/portfolio/masonry/9.jpg";
-import Mas10 from "../assets/img/portfolio/masonry/10.jpg";
-import Mas11 from "../assets/img/portfolio/masonry/11.jpg";
-import Mas12 from "../assets/img/portfolio/masonry/12.jpg";
+const formatDate = (date) => {
+  let ts = new Date(date);
+  return ts.toLocaleDateString();
+};
 
 function Home() {
+  const [threatList, setThreatList] = useState([]);
+
   useEffect(() => {
     scrollToTop();
+    getAllThreats();
   }, []);
+
+  const getAllThreats = async () => {
+    try {
+      const responseData = await getAllPostApi();
+      setThreatList(responseData.data);
+      console.log(responseData.data);
+    } catch (error) {
+      triggerError(error);
+    }
+  };
+
   return (
     <div className="wrapper">
       <header className="l-header">
@@ -40,9 +48,6 @@ function Home() {
                 >
                   <li className="active">
                     <Link to="/">Home</Link>
-                  </li>
-                  <li>
-                    <Link to="/threats">Threats</Link>
                   </li>
                   <li>
                     <Link to="/signin">Login</Link>
@@ -73,416 +78,62 @@ function Home() {
           </div>
         </div>
       </div>
-      <section className="body-content">
-        <div className="container">
-          <div className="row ">
-            <div className="portfolio portfolio-with-title portfolio-masonry blog-m col-3 gutter ">
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas1} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
+
+      <section className="body-content ">
+        <div className="page-content">
+          <div className="container">
+            <div className="row">
+              <div className="post-list">
+                {threatList.length > 0 &&
+                  threatList.map((item, i) => (
+                    <div className="col-md-4 my-5">
+                      <div className="post-single">
+                        {item.media.length === 0 ||
+                        typeof item.media === "string" ? (
+                          <div className="post-img">
+                            <div>
+                              <img
+                                src="assets/img/post/p4.jpg"
+                                alt="threat_img"
+                              />
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="post-img">
+                            <div>
+                              <img src={item.media[0]} alt />
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="post-desk">
+                          <h4 className="text-uppercase">
+                            <p>{item.post}</p>
+                          </h4>
+                          <div className="date">
+                            <a href="#" className="author">
+                              Date created
+                            </a>
+                            {formatDate(item.createdAt)}
+                          </div>
+                          <p>
+                            Nam libero tempore, cum soluta nobis est eligendi
+                            optio cumque nihil impedit quo minus id quod maxime
+                            placeat facere possimus.
+                          </p>
+                          <a href="blog-single.html" className="p-read-more">
+                            Read More <i className="icon-arrows_slim_right" />
+                          </a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">
-                      Massive UI Elemements
-                    </Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Saborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas2} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Full Responsive</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas41} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Easy to Customize</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Maborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas3} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Tons of Shortcodes</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas5} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">
-                      24/7 Customer Support
-                    </Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas7} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Dashing Design</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas61} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Clean Code</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas8} alt="" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Sky is the Limit</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas9} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">
-                      Stop Dreaming, Start Explore
-                    </Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas10} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Full Responsive</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas11} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Huge Demos</Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
-              </div>
-              <div className="portfolio-item ">
-                <div className="thumb">
-                  <img src={Mas12} alt="mas" />
-                  <div className="portfolio-hover">
-                    <div className="action-btn">
-                      <Link to="blog-single.html">
-                        <i className="icon-basic_link" />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-                <div className="portfolio-title">
-                  <h4>
-                    <Link to="portfolio-single.html">Buid with BS3 + </Link>
-                  </h4>
-                  <div className="date">
-                    <Link to="#">JOHN DOE</Link> , 12 July 2015
-                  </div>
-                  <p>
-                    Laborum volutpat, diam enim sagittis quam, id porta quam.
-                    Sed id dolor consectetur fermentum nibh volutpat, accumsan
-                    purus.
-                  </p>
-                  <div className="m-top-20 m-bot-20">
-                    <Link
-                      to="blog-single.html"
-                      className="btn btn-extra-small btn-dark-border btn-transparent   "
-                    >
-                      Read More
-                    </Link>
-                  </div>
-                </div>
+                  ))}
               </div>
             </div>
           </div>
         </div>
       </section>
+
       <footer id="footer" className="dark">
         <div className="primary-footer">
           <div className="container">

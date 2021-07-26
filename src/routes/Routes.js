@@ -1,9 +1,11 @@
 import Dashboard from "../pages/dashboard/Dashboard";
 import SubmitThreat from "../pages/dashboard/SubmitThreat";
+import ThreatDetail from "../pages/dashboard/ThreatDetail";
 import UnVerifiedThreats from "../pages/dashboard/UnVerifiedThreats";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Logout from "../pages/Logout";
+import OneThreat from "../pages/OneThreat";
 import Threats from "../pages/Threats";
 
 const Routes = [
@@ -14,10 +16,10 @@ const Routes = [
     component: Home,
   },
   {
-    path: "/threats",
+    path: "/threats/:id",
     exact: true,
     auth: true,
-    component: Threats,
+    component: OneThreat,
   },
   {
     path: "/submit-threat",
@@ -36,6 +38,12 @@ const Routes = [
     exact: true,
     auth: true,
     component: Dashboard,
+  },
+  {
+    path: "/admin/threat/:id",
+    exact: true,
+    auth: true,
+    component: ThreatDetail,
   },
   {
     path: "/unverified-threats",

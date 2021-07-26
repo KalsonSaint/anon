@@ -45,12 +45,6 @@ function Threats() {
       <section className="page-title">
         <div className="container">
           <h4 className="text-uppercase">ALL THREATS</h4>
-          <ol className="breadcrumb">
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li className="active">Threats</li>
-          </ol>
         </div>
       </section>
 

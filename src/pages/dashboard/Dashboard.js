@@ -19,6 +19,7 @@ function Dashboard() {
   const getAllThreats = async () => {
     try {
       const responseData = await getAllPostApi();
+      console.log(responseData.data);
       setThreatList(responseData.data);
     } catch (error) {
       triggerError(error);
@@ -44,7 +45,7 @@ function Dashboard() {
                   style={{ maxHeight: "400px" }}
                 >
                   <li className="active">
-                    <Link to="/">Dashboard</Link>
+                    <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
                     <Link to="">Manage Threats</Link>
@@ -76,54 +77,62 @@ function Dashboard() {
           </div>
         </div>
       </header>
+
       <section className="page-title">
         <div className="container">
-          <h4 className="text-uppercase">All Threats </h4>
+          <div className="row">
+            <div className="col-md-12">
+              <h4 className="text-uppercase">All Threats </h4>
+            </div>
+          </div>
         </div>
       </section>
-      <section className="body-content">
+
+      <section className="body-content ">
         <div className="page-content">
           <div className="container">
             <div className="row">
-              <div className="post-list">
-                {threatList.length > 0 &&
-                  threatList.map((threat) => (
-                    <>
-                      <div className="col-md-4">
-                        <div className="post-single">
-                          <div className="post-img">
-                            <div>
-                              <img src={threat.media[0]} alt />
-                            </div>
-                          </div>
-                          <div className="post-desk">
-                            <h4 className="text-uppercase">
-                              <a href="blog-single.html">{threat.post}</a>
-                            </h4>
-                            <div className="date">
-                              <p href="#" className="author">
-                                DATE CREATED
-                              </p>
-                              {formatDate(threat.createdAt)}
-                            </div>
-                            <p>{threat.description}</p>
-                            {threat.media.length > 1 && (
-                              <>
-                                <p className="">
-                                  View media files <br />
-                                  {threat.media.map((item, i) => (
-                                    <a href={item} target="_blank">
-                                      Media {i} ||{"  "}
-                                    </a>
-                                  ))}
-                                </p>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  ))}
+              <div className="col-md-12">
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Title</th>
+                      <th>Description</th>
+                      <th>Media Files</th>
+                      <th>Date Created</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {threatList.length > 0 &&
+                      threatList.map((threat, i) => (
+                        <tr key={i}>
+                          <th>
+                            <a href={`/admin/threat/${threat.id}`}>
+                              {threat.post}
+                            </a>
+                          </th>
+                          <th>{threat.description}</th>
+                          {threat.media && (
+                            <th>
+                              {threat.media.length === 0 ? (
+                                <p className="text-center">Nil</p>
+                              ) : (
+                                threat.media.map((item, i) => (
+                                  <a href={item} key={i} target="_blank">
+                                    Media {i}
+                                    <br />
+                                  </a>
+                                ))
+                              )}
+                            </th>
+                          )}
+                          <th>{formatDate(threat.createdAt)}</th>
+                          <th>{threat.verified === true ? `Verified` : ""}</th>
+                        </tr>
+                      ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
@@ -134,3 +143,54 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
+{
+  /* <section className="body-content">
+  <div className="page-content">
+    <div className="container">
+      <div className="row">
+        <div className="post-list">
+          {threatList.length > 0 &&
+            threatList.map((threat) => (
+              <>
+                <div className="col-md-4">
+                  <div className="post-single">
+                    <div className="post-img">
+                      <div>
+                        <img src={threat.media[0]} alt />
+                      </div>
+                    </div>
+                    <div className="post-desk">
+                      <h4 className="text-uppercase">
+                        <a href="blog-single.html">{threat.post}</a>
+                      </h4>
+                      <div className="date">
+                        <p href="#" className="author">
+                          DATE CREATED
+                        </p>
+                        {formatDate(threat.createdAt)}
+                      </div>
+                      <p>{threat.description}</p>
+                      {threat.media.length > 1 && (
+                        <>
+                          <p className="">
+                            View media files <br />
+                            {threat.media.map((item, i) => (
+                              <a href={item} target="_blank">
+                                Media {i} ||{"  "}
+                              </a>
+                            ))}
+                          </p>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </>
+            ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>; */
+}

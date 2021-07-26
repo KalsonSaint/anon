@@ -24,9 +24,11 @@ function UnVerifiedThreats() {
   }, []);
 
   const getUnverifiedThreats = async () => {
+    triggerLoadingAlert(true, "Fetching Unverified Threats", "Please Wait!");
     try {
       const responseData = await getNonVerifiedPostsApi();
       setUnverifiedThreats(responseData.data);
+      triggerLoadingAlert(false);
     } catch (error) {
       triggerError(error);
     }
@@ -117,19 +119,21 @@ function UnVerifiedThreats() {
                       <th>Description</th>
                       <th>Media Files</th>
                       <th>Date Created</th>
-                      <th>Date Created</th>
-                      <th>Date Created</th>
+                      <th>Approve Threat</th>
+                      <th>Disapprove Threat</th>
                     </tr>
                   </thead>
                   <tbody>
                     {unverifiedThreats.length > 0 &&
                       unverifiedThreats.map((threat, i) => (
                         <tr key={i}>
-                          <th>{threat.post}</th>
+                          <th>
+                            <a href={`/post/${threat.id}`}>{threat.post}</a>
+                          </th>
                           <th>{threat.description}</th>
                           {threat.media && (
                             <th>
-                              {threat.media.length === 0 || threat.media ? (
+                              {threat.media.length === 0 ? (
                                 <p className="text-center">Nil</p>
                               ) : (
                                 threat.media.map((item, i) => (

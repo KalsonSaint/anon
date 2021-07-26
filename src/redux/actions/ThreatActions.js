@@ -29,6 +29,15 @@ export const getNonVerifiedPostsApi = async () => {
     throw err;
   }
 };
+export const getThreatById = async (id) => {
+  try {
+    const url = `/post/${id}`;
+    const response = await axios.get(url);
+    return response.data;
+  } catch (err) {
+    throw err;
+  }
+};
 
 export const verifyPostApi = async (id) => {
   try {

@@ -1,11 +1,31 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import Logo from "../assets/img/logo.png";
-import { scrollToTop } from "../util/scrollToTop";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useParams } from "react-router-dom";
+import Logo from "../../assets/img/logo.png";
+import { triggerError, triggerLoadingAlert } from "../../components/Alert";
+import { getThreatById } from "../../redux/actions/ThreatActions";
 
-const OneThreat = () => {
+function ThreatDetail() {
   const { id } = useParams();
+
+  useEffect(() => {
+    getThreatDetails();
+  }, []);
+
+  const getThreatDetails = async () => {
+    triggerLoadingAlert(
+      true,
+      "Fetching threat details",
+      "Please wait while we get the details of the threat"
+    );
+    try {
+      const responseData = await getThreatById(id);
+      console.log(responseData.data);
+      triggerLoadingAlert(false);
+      //  setThreatList(responseData.data);
+    } catch (error) {
+      triggerError(error);
+    }
+  };
 
   return (
     <div className="wrapper">
@@ -25,8 +45,8 @@ const OneThreat = () => {
                   className="menuzord-menu menuzord-right c-nav_s-bg menuzord-indented scrollable"
                   style={{ maxHeight: "400px" }}
                 >
-                  <li className="active">
-                    <Link to="/">Dashboard</Link>
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
                   </li>
                   <li>
                     <Link to="">Manage Threats</Link>
@@ -58,8 +78,9 @@ const OneThreat = () => {
           </div>
         </div>
       </header>
+      <section></section>
     </div>
   );
-};
+}
 
-export default OneThreat;
+export default ThreatDetail;
