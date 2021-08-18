@@ -78,7 +78,32 @@ function ThreatDetail() {
           </div>
         </div>
       </header>
-      <section></section>
+
+      <section className="body-content">
+        <div className="page-content">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-8">
+                <div className="blog-classic">
+                  <div className="blog-post">
+                    <div className="full-width">
+                      <img src="assets/img/post/p12.jpg" alt="threatImg" />
+                    </div>
+                    <p>
+                      Lorem ipsum dolor sit amet, consectetur{" "}
+                      <a href="#">adipisicing elit</a>. Ab adipisci architecto
+                      consequatur debitis eos eum hic illum ipsam itaque laborum
+                      magni minima molestias nostrum numquam odit officia
+                      pariatur perspiciatis placeat porro quae rem, sequi sit
+                      soluta temporibus ullam voluptas voluptates.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

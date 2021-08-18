@@ -16,7 +16,7 @@ const Routes = [
     component: Home,
   },
   {
-    path: "/threats/:id",
+    path: "/threat/:id",
     exact: true,
     auth: true,
     component: OneThreat,

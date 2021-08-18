@@ -40,7 +40,8 @@ function Home() {
                 aria-label="Primary Navigation"
               >
                 <Link to="/" className="logo-brand">
-                  <img className="retina" src={Logo} alt="Massive" />
+                  {/* <img className="retina" src={Logo} alt="Massive" /> */}
+                  <h3 className="retina">AnonMe</h3>
                 </Link>
                 <ul
                   className="menuzord-menu menuzord-right c-nav_s-bg menuzord-indented scrollable"
@@ -64,6 +65,7 @@ function Home() {
           </div>
         </div>
       </header>
+
       <div className="banner-state  vertical-align banner-01 height-600">
         <div className="container-mid">
           <div className="container">
@@ -108,7 +110,9 @@ function Home() {
 
                         <div className="post-desk">
                           <h4 className="text-uppercase">
-                            <p>{item.post}</p>
+                            <p>
+                              <a href={`/threat/${item.id}`}>{item.post}</a>
+                            </p>
                           </h4>
                           <div className="date">
                             <a href="#" className="author">

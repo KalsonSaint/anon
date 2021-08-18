@@ -1,8 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/img/logo.png";
-import { triggerError } from "../../components/Alert";
-import { getAllPostApi } from "../../redux/actions/ThreatActions";
+import {
+  triggerError,
+  triggerLoadingAlert,
+  triggerSuccess,
+} from "../../components/Alert";
+import {
+  getAllPostApi,
+  deletePostApi,
+} from "../../redux/actions/ThreatActions";
 
 const formatDate = (date) => {
   let ts = new Date(date);
@@ -21,6 +28,22 @@ function Dashboard() {
       const responseData = await getAllPostApi();
       console.log(responseData.data);
       setThreatList(responseData.data);
+    } catch (error) {
+      triggerError(error);
+    }
+  };
+
+  const deleteThreat = async (id) => {
+    triggerLoadingAlert(
+      true,
+      "Disapproving",
+      "Please wait! threat is being disapproved."
+    );
+    try {
+      const responseData = await deletePostApi(id);
+      triggerLoadingAlert(false);
+      triggerSuccess(responseData.message);
+      window.location.reload();
     } catch (error) {
       triggerError(error);
     }
@@ -101,6 +124,7 @@ function Dashboard() {
                       <th>Media Files</th>
                       <th>Date Created</th>
                       <th>Status</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -129,6 +153,14 @@ function Dashboard() {
                           )}
                           <th>{formatDate(threat.createdAt)}</th>
                           <th>{threat.verified === true ? `Verified` : ""}</th>
+                          <th>
+                            <button
+                              className="btn btn-small btn-dark-border"
+                              onClick={() => deleteThreat(threat.id)}
+                            >
+                              <i className="fa fa-trash-o" /> Disapprove
+                            </button>
+                          </th>
                         </tr>
                       ))}
                   </tbody>

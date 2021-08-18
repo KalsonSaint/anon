@@ -57,7 +57,7 @@ function SubmitThreat() {
         "Validating Credentials",
         "Hold on while your account is authorized"
       );
-      await addPostApi(payload);
+      const responseData = await addPostApi(payload);
       triggerLoadingAlert(false);
       triggerSuccess("Threat submitted successfully");
       window.location.reload();

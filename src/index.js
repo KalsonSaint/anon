@@ -6,10 +6,13 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import ErrorBoundary from "./components/ErrorBoundary";
 
-import "bootstrap/dist/js/bootstrap.min.js";
+// import "bootstrap/dist/js/bootstrap.min.js";
+// import "./assets/css/shortcodes.css";
 // import "./assets/css/animate.css";
 // import "./assets/css/default-theme.css";
 // import "./assets/css/style.css";
+// import "./assets/css/style3860.css";
+// import "./assets/css/stylec4ca.css";
 
 ReactDOM.render(
   <Provider store={store}>

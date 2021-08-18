@@ -87,9 +87,9 @@ export const likePostApi = async () => {
   }
 };
 
-export const deletePostApi = async () => {
+export const deletePostApi = async (id) => {
   try {
-    const url = "/post";
+    const url = `/post/${id}`;
     const response = await axios.delete(url);
     return response.data;
   } catch (err) {

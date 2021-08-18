@@ -9,6 +9,7 @@ import {
 import {
   getNonVerifiedPostsApi,
   verifyPostApi,
+  deletePostApi,
 } from "../../redux/actions/ThreatActions";
 
 const formatDate = (date) => {
@@ -44,6 +45,22 @@ function UnVerifiedThreats() {
       const responseData = await verifyPostApi(id);
       triggerLoadingAlert(false);
       triggerSuccess(responseData.message);
+    } catch (error) {
+      triggerError(error);
+    }
+  };
+
+  const deleteThreat = async (id) => {
+    triggerLoadingAlert(
+      true,
+      "Disapproving",
+      "Please wait! threat is being disapproved."
+    );
+    try {
+      const responseData = await deletePostApi(id);
+      triggerLoadingAlert(false);
+      triggerSuccess(responseData.message);
+      window.location.reload();
     } catch (error) {
       triggerError(error);
     }
@@ -155,7 +172,10 @@ function UnVerifiedThreats() {
                             </button>
                           </th>
                           <th>
-                            <button className="btn btn-small btn-dark-border">
+                            <button
+                              className="btn btn-small btn-dark-border"
+                              onClick={() => deleteThreat(threat.id)}
+                            >
                               <i className="fa fa-trash-o" /> Disapprove
                             </button>
                           </th>
@@ -163,6 +183,11 @@ function UnVerifiedThreats() {
                       ))}
                   </tbody>
                 </table>
+                {unverifiedThreats.length === 0 && (
+                  <>
+                    <h2 className="text-center">No unverified Threats</h2>
+                  </>
+                )}
               </div>
             </div>
           </div>

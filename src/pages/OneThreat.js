@@ -26,31 +26,16 @@ const OneThreat = () => {
                   style={{ maxHeight: "400px" }}
                 >
                   <li className="active">
-                    <Link to="/">Dashboard</Link>
+                    <Link to="/">Home</Link>
                   </li>
                   <li>
-                    <Link to="">Manage Threats</Link>
-                    <ul className="dropdown">
-                      <li>
-                        <Link to="">View All Threats</Link>
-                      </li>
-                      <li>
-                        <Link to="">View All Comments</Link>
-                      </li>
-                      <li>
-                        <Link to="/unverified-threats">
-                          View Unverified Threats
-                        </Link>
-                      </li>
-                    </ul>
+                    <Link to="/signin">Login</Link>
                   </li>
                   <li className="nav-divider" aria-hidden="true">
-                    <Link to="!">|</Link>
+                    <Link to="javascript:void(0)">|</Link>
                   </li>
                   <li>
-                    <Link to="/logout" className="text-danger">
-                      Logout
-                    </Link>
+                    <Link to="/submit-threat">Submit Threat</Link>
                   </li>
                 </ul>
               </nav>
@@ -58,6 +43,8 @@ const OneThreat = () => {
           </div>
         </div>
       </header>
+
+     
     </div>
   );
 };
