@@ -81,7 +81,7 @@ function Home() {
         </div>
       </div>
 
-      <section className="body-content ">
+      <section className="body-content">
         <div className="page-content">
           <div className="container">
             <div className="row">
@@ -108,7 +108,7 @@ function Home() {
                           </div>
                         )}
 
-                        <div className="post-desk">
+                        <div className="post-desk my-5">
                           <h4 className="text-uppercase">
                             <p>
                               <a href={`/threat/${item.id}`}>{item.post}</a>
@@ -125,7 +125,10 @@ function Home() {
                             optio cumque nihil impedit quo minus id quod maxime
                             placeat facere possimus.
                           </p>
-                          <a href="blog-single.html" className="p-read-more">
+                          <a
+                            href={`/threat/${item.id}`}
+                            className="p-read-more"
+                          >
                             Read More <i className="icon-arrows_slim_right" />
                           </a>
                         </div>

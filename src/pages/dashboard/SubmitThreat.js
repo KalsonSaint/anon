@@ -111,12 +111,9 @@ function SubmitThreat() {
           <div className="container">
             <div className="row">
               <div className="col-md-12">
-                <h4 className="text-uppercase">have you a question?</h4>
-                <p>
-                  Nam libero tempore, cum soluta nobis est eligendi optio cumque
-                  nihil impedit quo minus id quod maxime placeat facere
-                  possimus. Nam libero tempore
-                </p>
+                <h2 className="text-uppercase font-weight-bolder">
+                  do you have a report?
+                </h2>
                 <form
                   className="js-mailer contact-comments"
                   onSubmit={handleSubmit}

@@ -158,7 +158,7 @@ function Dashboard() {
                               className="btn btn-small btn-dark-border"
                               onClick={() => deleteThreat(threat.id)}
                             >
-                              <i className="fa fa-trash-o" /> Disapprove
+                              <i className="fa fa-trash-o" /> Delete
                             </button>
                           </th>
                         </tr>
