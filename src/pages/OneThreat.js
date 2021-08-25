@@ -6,11 +6,11 @@ import { useParams } from "react-router-dom";
 import { getThreatById } from "../redux/actions/ThreatActions";
 import { triggerError, triggerLoadingAlert } from "../components/Alert";
 
-import "bootstrap/dist/js/bootstrap.min.js";
-import "../assets/css/shortcodes.css";
-import "../assets/css/animate.css";
-import "../assets/css/default-theme.css";
-import "../assets/css/style.css";
+// import "bootstrap/dist/js/bootstrap.min.js";
+// import "../assets/css/shortcodes.css";
+// import "../assets/css/animate.css";
+// import "../assets/css/default-theme.css";
+// import "../assets/css/style.css";
 
 const OneThreat = () => {
   const { id } = useParams();
@@ -114,6 +114,9 @@ const OneThreat = () => {
                     )}
                   </div>
                 </div>
+              </div>
+              <div className="heading-title-alt text-left">
+                <h4 className="text-uppercase">Leave a Comments</h4>
               </div>
             </div>
           </div>

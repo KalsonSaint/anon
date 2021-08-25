@@ -54,8 +54,8 @@ function SubmitThreat() {
     try {
       triggerLoadingAlert(
         true,
-        "Validating Credentials",
-        "Hold on while your account is authorized"
+        "Submitting Threat",
+        "Hold on while your threat is being submitted."
       );
       const responseData = await addPostApi(payload);
       triggerLoadingAlert(false);
